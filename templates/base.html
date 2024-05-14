@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flowbite Flask</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+    </head>
+<body>
+     {% block body %} {% endblock %}
+     {% block last %} {% endblock %}
+    
+     <style>
+        @keyframes fadeIn 
+        {from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }to {
+          opacity: 1;
+          transform: translateY(0);
+          }}
+          .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out forwards;
+            }
+        </style>
+    <script>
+        function toggleDropdown(menuId) {
+          const dropdownMenu = document
+          .getElementById(menuId);
+          dropdownMenu.classList.toggle('hidden');
+        }
+        </script>
+          <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+          <script>
+          const swiper = new Swiper('.swiper-container', {
+            slidesPerView: 5, 
+            spaceBetween: 1, 
+            loop: false, 
+            pagination: {
+            el: '.swiper-pagination', 
+            clickable: true, },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev', },
+            });
+            </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+</body>
+</html>

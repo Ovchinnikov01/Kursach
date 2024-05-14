@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block body %} 
 <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
     <a href="{{ url_for('home') }}">
@@ -23,5 +22,15 @@
             <div>
                 <a href="{{ url_for('login') }}">Войти</a><br>
             </div>
+            <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{ form.username }}
+        {{ form.password }}
+        {{ form.submit }}
+    </form>
+
+    <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
         </header>
 {% endblock %}
+
+    

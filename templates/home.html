@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% block body %}
+    <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
+        <img class="h-9.5 w-9 ml-60 mx-2" src="/static/img/behoof_logo.png" alt="">
+          <h1 class="text-3xl font-black mr-11">BRAND</h1>
+          <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
+          <div class="relative inline-block">
+            <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300  hover:bg-red-400 py-2.5 px-10  mr-5 rounded-2xl focus:outline-slate-50"onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
+            <div class="hidden origin-top-left absolute left-0 mt-2 px-96 py-96 rounded-md shadow-lg bg-slate-50 ring-1 ring-black ring-opacity-5 animate-fadeIn " id="dropdownMenuRight">
+              <a href="/about" class="text-sm   text-gray-700  hover:bg-gray-100">Left Option 3</a>
+            </div>
+          </div>
+          <div class="flex justify-end w-1/2 h-full  ">
+        <input type="text" placeholder="Поиск" class="w-full px-3 shadow-inner rounded-bl-sm rounded-tl-sm border border-gray-300 focus:border-blue-700 focus:outline-none">
+        <button class="focus:outline-none flex items-center px-6 py-1 text-gray-600 bg-gray-100 border border-l-0  ">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+        </button>
+        <button class="bg-smoky px-2 py-1 mx-2 w-12 h-12"><img src="/static/img/heart.png" alt=""></button>
+            <button class="bg-smoky px-2 py-1 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></button>
+            <button class="bg-smoky px-2 py-1 mx-1 w-12 h-12"><img src="/static/img/chart.png" alt=""></button>
+          </div>
+          <button>
+            <a href="{{ url_for('login') }}">Войти</a><br>
+          </button>
+        </header>
+        <div class="flex-col  columns-1">
+        <section class=" bg-slate-50 w-2/5 h-80 mt-20 ml-60 rounded-2xl">
+          <img class="absolute w-2/5 h-80" src="/static/img/Patterns.png" alt="">
+            <p class="text-5xl flex px-10 pt-10 font-extrabold">1.8 млн товаров в 2272 магазинах найди, сравни, выберай!</p>
+            <button class="text-white py-4 px-6 bg-red-600 mt-8 ml-10 rounded-2xl">Перейти к категориям</button>
+          </div>
+         <div class="bg-slate-50 w-1/3 h-80 ml-[1050px] absolute -mt-80 rounded-2xl">
+          <img class="absolute w-2/3 h-80" src="/static/img/Patterns.png" alt="">
+          <img class="absolute mt-36 ml-96 " src="/static/img/image 17.png" alt="">
+          <p class="text-5xl flex px-10 pt-10 font-extrabold">Топ-10 смартфонов 2024 года</p>
+          <button class="text-white py-4 px-10 bg-red-600 mt-20 ml-10 rounded-2xl">Смотреть</button>
+          </div>
+      </section>
+      <div class=" justify-center pt-36 ">
+        <h1 class="font-bold text-2xl mt-5 px-44 absolute ">Категории</h1>
+       <div class="flex flex-wrap  justify-center bg-slate-50 w-full h-96 pt-28 rounded-2xl ">
+           <div class="px-6 ">
+          <img class=" w-40 rounded-2xl " src="/static/img/Image.png" alt="">
+          <p class="text-center text-base font-bold">Смартфоны</p>
+        </div>
+        <div class="px-6">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (1).png" alt="">
+          <p class="text-center text-base font-bold">Ноутбуки</p>
+        </div>
+        <div class=" px-6">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (2).png" alt="">
+          <p class="text-center text-base font-bold">Планшеты</p>
+        </div class=" px-9">
+        <div>
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (3).png" alt="">
+          <p class="text-center text-base font-bold">Умные часы</p>
+        </div>
+        <div class=" px-6 ">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (4).png" alt="">
+          <p class="text-center text-base font-bold">Игровые приставки</p>
+        </div>
+        <div class="px-6 ">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (5).png" alt="">
+          <p class="text-center text-base font-bold">Колонки</p>
+        </div>
+        <div class=" px-6 ">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (6).png" alt="">
+          <p class="text-center text-base font-bold">Наушники</p>
+        </div>
+        <div class=" px-6 ">
+          <img class=" w-40 rounded-2xl" src="/static/img/Image (7).png" alt="">
+          <p class="text-center text-base font-bold">Аксесуары</p>
+        </div>
+        </div>
+      </div>
+      </div>
+      <div>
+      <div class="flex flex-wrap  justify-center pt-24 " >
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-11 pt-4 " src="/static/img/ni.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-4 pt-3" src="/static/img/aple.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-3 pt-5" src="/static/img/asus.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-4 pt-6" src="/static/img/samsung.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-3 pt-4" src="/static/img/msi.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-11 pt-4" src="/static/img/ni.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-4 pt-6" src="/static/img/gigabyte.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-4 pt-6" src="/static/img/sony.png" alt=""></div>
+        <div class="bg-slate-50 w-32 h-16 rounded-2xl mx-9 "><img class="items-center mx-9 pt-4" src="/static/img/intel.png" alt=""></div>
+      </div>
+    </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper flex flex-nowrap pt-32 w-96">
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">Умная колонка VK Капсула</p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">10000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-20 h-24 ml-60 mt-28 absolute" src="/static/img/kolonkavk.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide ">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">16" Ноутбук MAIBENBEN P625 серый</p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">40000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-28 h-28 ml-52 mt-24 absolute" src="/static/img/maibenben.jpg" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6">55" (138 см) LED-телевизор Samsung <br>UE55CU7100UXRU черный </p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">35000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-32 h-28 ml-48 mt-24 absolute" src="/static/img/samsungtelik.png" alt="">
+            </div>
+          </div>
+          <div class="swiper-slide ">
+            <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+              <p class="absolute text-base mt-10 mx-6 ">55 glfdkglkdfl ffdsfds</p>
+              <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">20000 ₽</h1>
+              <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+              <img class="w-28 h-28 ml-52 mt-24 absolute" src="/static/img/maibenben.jpg" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev absolute left-1 z-10 flex items-center justify-center rounded-full bg-slate-200 p-2 m-3 -mt-28"><svg height="24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 12H19M5 12L11 6M5 12L11 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></div>
+        <div class="swiper-button-next absolute right-0 z-10 flex items-center justify-center rounded-full bg-slate-200 p-2 m-3 -mt-28"><svg height="24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z" fill="#000000"></path> </g></svg></div>
+      </div>
+      <div>
+        <h1 class="font-bold text-2xl mt-12 px-10  absolute">Наши преимущества</h1>
+        <div class="flex flex-nowrap pt-32 ">
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+             <p class="text-base font-extrabold absolute pt-36 pl-7">В интернете товаров <br>в два раза больше!</p>
+            <img class="-mt-16 ml-5 " src="/static/img/korzinka (1).png" alt="">
+           </div>
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+            <img class="-mt-5" src="/static/img/vremya (1).png" alt="">
+            <p class="text-center text-base font-extrabold">Закажите когда угодно, забирайте когда удобно</p>
+          </div>
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+            <img class="-mt-16 pr-2" src="/static/img/oper (1).png" alt="">
+            <p class="text-center text-base font-extrabold pb-4 pl-2">Опережайте время!</p>
+          </div>
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+            <p class="text-center text-base font-extrabold absolute pt-36 pl-11">Гарантия лучшей<br> цены</p>
+            <img  class="-mt-11" src="/static/img/valut (1).png" alt="">
+            </div>
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+            <p class="text-center text-base font-extrabold pt-36 pl-10 absolute" >Сложно выбрать?<br> Мы поможем</p>
+            <img  class="-mt-14 ml-2" src="/static/img/pomoch (1).png" alt="">
+            
+          </div>
+          <div class="bg-slate-50 w-64 h-52 mx-12 rounded-2xl">
+            <p class="text-center text-base font-extrabold pt-36 absolute pl-3">Выгодные предложения</p>
+            <img  class="-mt-10 pr-2" src="/static/img/iconka (1).png" alt="">
+            </div>
+          </div>
+      </div>
+      <div class="bg-slate-50 w-full h-96 mt-20">
+        <div class="">
+          <img class="h-9.5 w-9 ml-44 mt-10 absolute" src="/static/img/behoof_logo.png" alt="">
+          <h1 class="text-3xl font-black px-56 pt-10">BRAND</h1>
+          <p class="text-base text-gray-400 pl-44 pt-6">Мы в соц сетях</p>
+          <div class="flex flex-wrap pt-7 ml-44 gap-3">
+            <img src="/static/img/VK.png" alt="">
+            <img src="/static/img/TT.png" alt="">
+            <img src="/static/img/Inst.png" alt="">
+            <img src="/static/img/TG.png" alt="">
+            <img src="/static/img/YT.png" alt="">
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-64 justify-center -mt-40">
+          <div>
+            <h1 class="py-2 text-base text-gray-400">Пользователю</h1>
+            <div>
+            <p class="py-4 text-anthracite">Связаться с нами</p>
+            <p class="py-4 text-anthracite">Поддерка пользователей</p>
+            <p class="py-4 text-anthracite">FAQ & Руководства</p>
+            <p class="py-4 text-anthracite">Политика конфиденциальности</p>
+            <p class="py-4 text-anthracite">Пользовательское соглашение</p>
+            </div>
+          </div>
+          <div>
+            <h1 class="py-2 text-base text-gray-400">Популярные категории</h1>
+            <div>
+              <p class="py-4 text-anthracite">Смартфоны</p>
+              <p class="py-4 text-anthracite">Teteras electricas</p>
+              <p class="py-4 text-anthracite">Стиральные машины</p>
+              <p class="py-4 text-anthracite">Телевизоры</p>
+              <p class="py-4 text-anthracite">Ноутбуки</p>
+            </div>
+          </div>
+          <div>
+            <h1 class="py-2 text-base text-gray-400">Команда BRAND</h1>
+            <div>
+              <p class="py-4 text-anthracite">О нас</p>
+              <p class="py-4 text-anthracite">Работа у нас</p>
+            </div>
+          </div>
+         </div>
+      </div>
+  {% endblock %}

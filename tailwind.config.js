@@ -13,6 +13,7 @@ module.exports = {
         'smoky': '#f2f3f5',
         'white-2': '#fdfdfd',
         'white-3': '#EDF2F7',
+        'anthracite': '#263141',
       },
       spacing: {
         '1050px': '1050px',
