@@ -5,20 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch via NPM",
-            "request": "launch",
-            "runtimeArgs": [
-                "run-script",
-                "debug"
-            ],
-            "runtimeExecutable": "npm",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node"
-        },
-
-        {
             "name": "Отладчик Python: Flask",
             "type": "debugpy",
             "request": "launch",
@@ -34,13 +20,6 @@
             ],
             "jinja": true,
             "autoStartBrowser": false
-        },
-        {
-            "name": "Отладчик Python: Текущий файл",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
         }
     ]
 }

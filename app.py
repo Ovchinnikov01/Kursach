@@ -1,89 +1,143 @@
-from flask import Flask, render_template, url_for, redirect
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
-from flask_bcrypt import Bcrypt
+from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
+import os
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = 'thisisasecretkey'
 
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
+if not os.path.exists('static/profile_pictures'):
+    os.makedirs('static/profile_pictures')
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def create_table():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            profile_picture TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
+create_table()
 
-class RegisterForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
-    submit = SubmitField('Register')
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
 
-    def validate_username(self, username):
-        existing_user_username = User.query.filter_by(username=username.data).first()
-        if existing_user_username:
-            raise ValidationError('That username already exists. Please choose a different one.')
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
 
-class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
-    submit = SubmitField('Login')
+        try:
+            cursor.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", (username, password, email))
+            conn.commit()
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            return render_template('register.html', error='Пользователь с таким именем или электронной почтой уже существует')
+        finally:
+            conn.close()
+
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('profile'))
+        else:
+            return render_template('login.html', error='Неверный логин или пароль')
+
+    return render_template('login.html')
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if 'logged_in' in session and session['logged_in']:
+        username = session['username']
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            return render_template('profile.html', user=user)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/profile/edit', methods=['GET', 'POST'])
+def edit_profile():
+    if 'logged_in' in session and session['logged_in']:
+        username = session['username']
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            if request.method == 'POST':
+                new_email = request.form['email']
+                new_profile_picture = request.files.get('profile_picture')
+
+                conn = sqlite3.connect('users.db')
+                cursor = conn.cursor()
+
+                try:
+                    if new_profile_picture:
+                        
+                        new_profile_picture.save(os.path.join(app.root_path, 'static', 'profile_pictures', f'{username}.jpg'))
+                        
+                        cursor.execute("UPDATE users SET email=?, profile_picture=? WHERE username=?", (new_email, f'/static/profile_pictures/{username}.jpg', username))
+                    else:
+                        cursor.execute("UPDATE users SET email=? WHERE username=?", (new_email, username))
+
+                    conn.commit()
+                    return redirect(url_for('profile'))
+                except sqlite3.IntegrityError:
+                    return render_template('edit_profile.html', user=user, error='Электронная почта уже используется')
+                finally:
+                    conn.close()
+
+            return render_template('edit_profile.html', user=user)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('pol'))
-            else:  # Пароль неверен
-                return render_template('login.html', form=form, error="Неверный пароль")
-        else:  # Пользователь не найден
-            return render_template('login.html', form=form, error="Пользователь не найден")
-    return render_template('login.html', form=form)
 
-@app.route('/pol', methods=['GET', 'POST'])
-@login_required
-def pol():
-    return render_template('pol.html')
-
-@app.route('/logout', methods=['GET', 'POST'])
-@login_required
+@app.route('/logout')
 def logout():
-    logout_user()
+    session.pop('logged_in', None)
+    session.pop('username', None)
     return redirect(url_for('login'))
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegisterForm()
-
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('pol'))  
-
-    return render_template('register.html', form=form)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True,  host='0.0.0.0')
