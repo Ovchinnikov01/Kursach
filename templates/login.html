@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %} 
 <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
-    <a href="{{ url_for('home') }}">
+    <a href="{{ url_for('index') }}">
         <h1 class="text-3xl font-black ml-64 mb-2 absolute ">BRAND</h1>
         <img class="h-9.5 w-9 ml-52 mx-2 " src="/static/img/behoof_logo.png" alt=""></a>
         <p class="text-sm text-rgba(38, 49, 65, 1) pl-32 px-4 ">Лучшие цены в <br>интернет-магазинах </p>
@@ -44,7 +44,7 @@
             <button class="focus:outline-none flex items-center px-6 py-1 text-gray-600 bg-gray-100 border border-l-0  ">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg></button>
                 <button class="bg-smoky px-2 py-1 mx-2 w-12 h-12"><img src="/static/img/heart.png" alt=""></button>
-                <button class="bg-smoky px-2 py-1 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></button>
+                <a href="{{ url_for('profile') }}" class="bg-smoky px-2 py-1 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></a>
                 <button class="bg-smoky px-2 py-1 mx-1 w-12 h-12"><img src="/static/img/chart.png" alt=""></button>
             </div>
             <div>
@@ -54,17 +54,23 @@
     <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
         </header>
         
-        <h1>Login</h1>
-    <form action="/login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
+        <h1>Вход</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    
+        <form method="POST">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" id="username" required>
+    
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required>
+    
+            <button type="submit">Войти</button>
+        </form>
+    
+        <a href="{{ url_for('register') }}" class="button">Зарегистрироваться</a>
 {% endblock %}
 
     

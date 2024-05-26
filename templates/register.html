@@ -2,7 +2,7 @@
 
 {% block body %} 
 <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
-    <a href="{{ url_for('home') }}">
+    <a href="{{ url_for('index') }}">
         <img class="h-9.5 w-9 ml-60 mx-2" src="/static/img/behoof_logo.png" alt="">
           <h1 class="text-3xl font-black mr-11">BRAND</h1></a>
           <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
@@ -55,18 +55,25 @@
         </header>
         
   
-        <h1>Register</h1>
-        <form class="text-center" action="/register" method="post">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br><br>
-            <input class="text-white  bg-red-600 border " type="submit" value="Register">
-        </form>
+        <h1>Регистрация</h1>
+
         {% if error %}
-            <p class="text-center">{{ error }}</p>
+            <p class="error">{{ error }}</p>
         {% endif %}
+    
+        <form method="POST">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" id="username" required>
+    
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+    
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    
+        <a href="{{ url_for('login') }}" class="button">Войти</a>
       
 {% endblock %}
