@@ -1,0 +1,112 @@
+<h1>Административная панель</h1>
+
+<h2>Товары</h2>
+<a href="{{ url_for('add_product') }}">Добавить товар</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Код</th>
+        <th>Изображение</th>
+        <th>Цена</th>
+        <th>Действия</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td>{{ product[0] }}</td>
+        <td>{{ product[1] }}</td>
+        <td>{{ product[2] }}</td>
+        <td><img src="/static/{{ product[3] }}" width="50"></td>
+        <td>{{ product[4] }}</td>
+        <td>
+            <a href="{{ url_for('edit_product', product_id=product[0]) }}">Редактировать</a> |
+            <a href="{{ url_for('delete_product', product_id=product[0]) }}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Заказы</h2>
+<table >
+    <tr>
+        <th>ID</th>
+        <th>Пользователь</th>
+        <th>Итоговая цена</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order[0] }}</td>
+        <td>{{ order[1] }}</td>
+        <td>{{ order[2] }}</td>
+        <td>{{ order[3] }}</td>
+        <td>
+            {% if order[3] == 'Новый' %}
+            <a href="{{ url_for('handle_order', order_id=order[0], action='accept') }}">Принять</a> |
+            <a href="{{ url_for('handle_order', order_id=order[0], action='reject') }}">Отклонить</a>
+            {% elif order[3] == 'Принят' %}
+            <a href="{{ url_for('handle_order', order_id=order[0], action='complete') }}">Завершить</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% extends 'base.html' %}
+
+    {% block body %} 
+    <h1>Административная панель</h1>
+
+    <h2>Товары</h2>
+    <a href="{{ url_for('add_product') }}">Добавить товар</a>
+    <table >
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Код</th>
+            <th>Изображение</th>
+            <th>Цена</th>
+            <th>Действия</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product[0] }}</td>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[2] }}</td>
+            <td><img src="/static/{{ product[3] }}" width="50"></td>
+            <td>{{ product[4] }}</td>
+            <td>
+                <a href="{{ url_for('edit_product', product_id=product[0]) }}">Редактировать</a> |
+                <a href="{{ url_for('delet_product', product_id=product[0]) }}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Заказы</h2>
+    <table >
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>Итоговая цена</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order[0] }}</td>
+            <td>{{ order[1] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>{{ order[3] }}</td>
+            <td>
+                {% if order[3] == 'Новый' %}
+                <a href="{{ url_for('handle_order', order_id=order[0], action='accept') }}">Принять</a> |
+                <a href="{{ url_for('handle_order', order_id=order[0], action='reject') }}">Отклонить</a>
+                {% elif order[3] == 'Принят' %}
+                <a href="{{ url_for('handle_order', order_id=order[0], action='complete') }}">Завершить</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}

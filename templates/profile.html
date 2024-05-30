@@ -67,7 +67,7 @@
     </header>
 
     <main>
-        <h2>Добро пожаловать, {{ user[1] }}</h2>
+        <h2 class="text-cyan-400">Добро пожаловать, <p class="text-red-500">{{ user[1] }}</p></h2>
 
         <h3>Ваши заказы:</h3>
         <table class="orders-table">
@@ -83,7 +83,7 @@
                 {% if orders %}
                     {% for order in orders %}
                         <tr>
-                            <td>{{ order[0] }}</td>
+                            <td class="text-cyan-500">{{ order[0] }}</td>
                             <td>{{ order[2] }} руб.</td>
                             <td>{{ order[3] }}</td> 
                             <td>
@@ -93,7 +93,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="4">У вас еще нет заказов.</td>
+                        <td colspan="4" class="text-cyan-400">У вас еще нет заказов.</td>
                     </tr>
                 {% endif %}
             </tbody>

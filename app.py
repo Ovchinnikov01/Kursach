@@ -7,6 +7,9 @@ import os
 app = Flask(__name__)
 app.secret_key = "secret key"
 
+app.config['UPLOAD_FOLDER'] = 'static/product-images'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 app.config['DATABASE'] = 'database.db'
 
@@ -32,12 +35,105 @@ def create_tables():
             INSERT INTO product (name, code, image, price) VALUES
             ('telofon', 'nokia', 'product-images/bag.jpg', 12000.00),
             ('telofon', 'nokia', 'product-images/external-hard-drive.jpg', 5000.00),
-            ('nokia', 'nokia', 'product-images/shoes.jpg', 1000.00),
-            ('nokia', 'nokia', 'product-images/laptop.jpg', 80000.00),
-            ('nokia', 'nokia', 'product-images/camera.jpg', 150000.00),
-            ('nokia', 'nokia', 'product-images/mobile.jpg', 3000.00),
-            ('nokia', 'nokia', 'product-images/watch.jpg', 3000.00),
-            ('nokia', 'nokia', 'product-images/headphone.jpg', 400.00);
+            ('nokia', 'nokia', 'static/product-images/shoes.jpg', 1000.00),
+            ('nokia', 'nokia', 'static/product-images/laptop.jpg', 80000.00),
+            ('nokia', 'nokia', 'static/product-images/camera.jpg', 150000.00),
+            ('nokia', 'nokia', 'static/product-images/mobile.jpg', 3000.00),
+            ('nokia', 'nokia', 'static/product-images/watch.jpg', 3000.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),  
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+             ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),                               
+            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00);
+                                            
         """)
     db.commit()
 
@@ -57,7 +153,6 @@ def create_table():
     conn.commit()
     conn.close()
 
-create_table()
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -223,14 +318,25 @@ def add_product_to_cart():
             cursor.execute("SELECT * FROM product WHERE code=?", (_code,))
             row = cursor.fetchone()
 
-            if row: 
+            if row:
+                
+                image_file = request.files.get('image')
+                if image_file and image_file.filename != '':
+                    
+                    image_filename = image_file.filename
+                    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+                    image_file.save(image_path)
+                else:
+                    
+                    image_filename = row[3]
+
                 itemArray = {
                     _code: {  
                         'name': row[1],
                         'code': row[2],
                         'quantity': _quantity,
                         'price': row[4],
-                        'image': row[3],
+                        'image': image_filename,  
                         'total_price': _quantity * row[4]
                     }
                 }
@@ -330,6 +436,136 @@ def array_merge(first_array, second_array):
     elif isinstance(first_array, set) and isinstance(second_array, set):
         return first_array.union(second_array)
     return False
+
+@app.route('/admin_panel')
+def admin_panel():
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            return render_template('admin_panel.html')
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/add_product', methods=['GET', 'POST'])
+def add_product():
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            if request.method == 'POST':
+                name = request.form['name']
+                code = request.form['code']
+                price = request.form['price']
+                image_file = request.files.get('image')
+
+                if image_file and image_file.filename != '':
+                    image_filename = image_file.filename
+                    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+                    image_file.save(image_path)
+                else:
+                    return 'Ошибка: Загрузите изображение.'
+
+                try:
+                    cursor.execute("INSERT INTO product (name, code, image, price) VALUES (?, ?, ?, ?)",
+                                   (name, code, image_filename, price))
+                    db.commit()
+                    flash('Товар добавлен успешно!', 'success')
+                    return redirect(url_for('admin_panel'))
+                except sqlite3.IntegrityError:
+                    return render_template('add_product.html', error='Товар с таким кодом уже существует')
+            return render_template('add_product.html')
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/edit_product/<int:product_id>', methods=['GET', 'POST'])
+def edit_product(product_id):
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            cursor.execute("SELECT * FROM product WHERE id=?", (product_id,))
+            product = cursor.fetchone()
+            if product:
+                if request.method == 'POST':
+                    name = request.form['name']
+                    code = request.form['code']
+                    price = request.form['price']
+                    image_file = request.files.get('image')
+
+                    if image_file and image_file.filename != '':
+                        image_filename = image_file.filename
+                        image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+                        image_file.save(image_path)
+                        cursor.execute("UPDATE product SET name=?, code=?, image=?, price=? WHERE id=?",
+                                       (name, code, image_filename, price, product_id))
+                    else:
+                        cursor.execute("UPDATE product SET name=?, code=?, price=? WHERE id=?",
+                                       (name, code, price, product_id))
+
+                    db.commit()
+                    flash('Товар изменен успешно!', 'success')
+                    return redirect(url_for('admin_panel'))
+                return render_template('edit_product.html', product=product)
+            else:
+                return 'Товар не найден.'
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/delet_product/<int:product_id>')
+def delet_product(product_id):
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            try:
+                cursor.execute("DELETE FROM product WHERE id=?", (product_id,))
+                db.commit()
+                flash('Товар удален успешно!', 'success')
+                return redirect(url_for('admin_panel'))
+            except Exception as e:
+                print(e)
+                flash('Ошибка удаления товара', 'error')
+                return redirect(url_for('admin_panel'))
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/orders')
+def admin_orders():
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            cursor.execute("SELECT * FROM orders")
+            orders = cursor.fetchall()
+            return render_template('admin_orders.html', orders=orders)
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/order/<int:order_id>/<string:action>')
+def handle_order(order_id, action):
+    if 'logged_in' in session and session['logged_in']:
+        if session['username'] == 'admin':
+            if action == 'accept':
+                cursor.execute("UPDATE orders SET status='Принят' WHERE id=?", (order_id,))
+                db.commit()
+                flash('Заказ принят в работу!', 'success')
+            elif action == 'reject':
+                cursor.execute("UPDATE orders SET status='Отклонен' WHERE id=?", (order_id,))
+                db.commit()
+                flash('Заказ отклонен!', 'success')
+            elif action == 'complete':
+                cursor.execute("UPDATE orders SET status='Завершен' WHERE id=?", (order_id,))
+                db.commit()
+                flash('Заказ завершен!', 'success')
+            else:
+                flash('Некорректное действие.', 'error')
+            return redirect(url_for('admin_orders'))
+        else:
+            return 'У вас нет прав доступа к административной панели.'
+    else:
+        return redirect(url_for('login'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
