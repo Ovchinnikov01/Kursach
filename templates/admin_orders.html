@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+    {% block body %} 
+    <h1>Заказы администратора</h1>
+
+    {% if orders %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Статус</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.product }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        <form action="/admin/order/{{ order.id }}/accept" method="POST">
+                            <button type="submit">Принять</button>
+                        </form>
+                        <form action="/admin/order/{{ order.id }}/reject" method="POST">
+                            <button type="submit">Отклонить</button>
+                        </form>
+                        <form action="/admin/order/{{ order.id }}/complete" method="POST">
+                            <button type="submit">Завершить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Заказов нет.</p>
+    {% endif %}
+   
+    {% endblock %}

@@ -59,48 +59,34 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('products') }}">Товары</a></li>
-                <li><a href="{{ url_for('view_cart') }}">Корзина</a></li>
+                <li><a href="{{ url_for('cart') }}">Корзина</a></li>
                 <li><a href="{{ url_for('profile') }}">Профиль</a></li>
                 <li><a href="{{ url_for('logout') }}">Выход</a></li>
             </ul>
         </nav>
     </header>
+    <h1>Профиль</h1>
 
-    <main>
-        <h2 class="text-cyan-400">Добро пожаловать, <p class="text-red-500">{{ user[1] }}</p></h2>
+    <h2>Информация о пользователе</h2>
+    <ul>
+        <li>Имя пользователя: {{ user[1] }}</li>
+        <li>Email: {{ user[2] }}</li>
+        <li>Дата регистрации: {{ user[4] }}</li>
+    </ul>
 
-        <h3>Ваши заказы:</h3>
-        <table class="orders-table">
-            <thead>
-                <tr>
-                    <th>Номер заказа</th>
-                    <th>Общая стоимость</th>
-                    <th>Дата заказа</th>
-                    <th>Подробнее</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if orders %}
-                    {% for order in orders %}
-                        <tr>
-                            <td class="text-cyan-500">{{ order[0] }}</td>
-                            <td>{{ order[2] }} руб.</td>
-                            <td>{{ order[3] }}</td> 
-                            <td>
-                                <a href="{{ url_for('order_details', order_id=order[0]) }}">Просмотреть</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-cyan-400">У вас еще нет заказов.</td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    </main>
-        
+  
+
+<h2>Все товары</h2>
+<ul>
+  {% for product in all_products %}
+      <li>
+          <img src="{{ product[1] }}" alt="{{ product[2] }}" width="50" height="50">
+          {{ product[2] }} - Цена: {{ product[4] }} шт.
+      </li>
+  {% endfor %}
+</ul>
         <a href="/profile/edit">Редактировать профиль</a>
         <a href="/logout">Выйти</a>
+        
 
 {% endblock %}

@@ -3,34 +3,33 @@
     {% block body %} 
     
     <main>
-        <h2>Ваш заказ:</h2>
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for code, item in cart_items.items() %}
-                <tr>
-                    <td>{{ item['name'] }}</td>
-                    <td>{{ item['quantity'] }}</td>
-                    <td>{{ item['price'] * item['quantity'] }} руб.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <h2>Ваш заказ:</h2>
+      <table class="cart-table">
+          <thead>
+              <tr>
+                  <th>Название</th>
+                  <th>Количество</th>
+                  <th>Цена</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for code, item in cart_items.items() %}
+              <tr>
+                  <td>{{ item['name'] }}</td>
+                  <td>{{ item['quantity'] }}</td>
+                  <td>{{ item['price'] * item['quantity'] }} руб.</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
 
-        <div class="total-price">
-            <h3>Итого: {{ total_price }} руб.</h3>
-        </div>
+      <div class="total-price">
+          <h3>Итого: {{ total_price }} руб.</h3>
+      </div>
 
-        <form action="/profile" method="POST">
-            <button type="submit">Оформить заказ</button>
-        </form>
-    </main>
+      <form action="/profile" method="POST">
+          <button type="submit">Оформить заказ</button>
+      </form>
+  </main>
 
-    
     {% endblock %}

@@ -59,38 +59,27 @@
 
 
 
-            <h2>Ваша корзина покупок</h2>
-            {% if cart_items %}
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Товар</th>
-                            <th>Количество</th>
-                            <th>>Цена</th>
-                            <th>Промежуточный итог</th>
-                            <th>Акция</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for code, item in cart_items.items() %}
-                            <tr>
-                                <td>{{ item['name'] }}</td>
-                                <td>{{ item['quantity'] }}</td>
-                                <td>{{ item['price'] }}</td>
-                                <td>{{ item['total_price'] }}</td>
-                                <td>
-                                    <a href="/delete/{{ code }}">Удалить</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <h2>Ваша корзина</h2>
+            <ul>
+              {% for order_item in order_items %}
+                {% for product in products %}
+                  {% if product[1] == order_item[2] %}
+                    <li class="cart-item">
+                      <img src="{{ product[3] }}" alt="{{ product[0] }}" width="50" height="auto">
+                      <div>
+                        <h3>{{ product[0] }}</h3>
+                        <p>Количество: {{ order_item[3] }}</p>
+                        <p>Цена: {{ order_item[4] }}</p>
+                      </div>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </ul>
                 <p>Общее количество: {{ total_quantity }}</p>
                 <p>Итоговая цена: {{ total_price }}</p>
         
                 <a href="/checkout" class="checkout-button">Оформить заказ</a>
                 <a href="/empty" class="empty-cart-button">Пустая корзина</a>
-            {% else %}
-                <p>Ваша корзина пуста.</p>
-            {% endif %}
+            
     {% endblock %}

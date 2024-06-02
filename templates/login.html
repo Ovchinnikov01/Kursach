@@ -54,23 +54,17 @@
     <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
         </header>
         
-        <h1>Вход</h1>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-    
-        <form method="POST">
+        <h2>Вход</h2>
+        <form method="POST" action="{{ url_for('login') }}">
             <label for="username">Имя пользователя:</label>
-            <input type="text" name="username" id="username" required>
-    
+            <input type="text" id="username" name="username" required>
             <label for="password">Пароль:</label>
-            <input type="password" name="password" id="password" required>
-    
+            <input type="password" id="password" name="password" required>
             <button type="submit">Войти</button>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
         </form>
-    
-        <a href="{{ url_for('register') }}" class="button">Зарегистрироваться</a>
 {% endblock %}
 
     
