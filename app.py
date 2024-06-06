@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, make_response 
 from flask_wtf import FlaskForm, CSRFProtect  
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import secrets
 import os
 
 app = Flask(__name__)
@@ -36,106 +37,103 @@ def create_tables():
     if cursor.fetchone() is None:
         cursor.execute("""
             INSERT INTO product (name, code, image, price) VALUES
-            ('telofon', 'nokia', 'product-images/bag.jpg', 12000.00),
-            ('telofon', 'nokia', 'product-images/external-hard-drive.jpg', 5000.00),
-            ('nokia', 'nokia', 'static/product-images/shoes.jpg', 1000.00),
-            ('nokia', 'nokia', 'static/product-images/laptop.jpg', 80000.00),
-            ('nokia', 'nokia', 'static/product-images/camera.jpg', 150000.00),
-            ('nokia', 'nokia', 'static/product-images/mobile.jpg', 3000.00),
-            ('nokia', 'nokia', 'static/product-images/watch.jpg', 3000.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),  
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-             ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia1', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia2', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia3', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia4', 'nokia', 'static/product-images/tel.png', 400.00),
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00),                               
-            ('nokia5', 'nokia', 'static/product-images/tel.png', 400.00);
+    ('Телефон Nokia 3310', 'nokia', 'external-hard-drive.jpg', 150.00),  
+    ('Телефон Samsung Galaxy S23 Ultra', 'samsung', 'external-hard-drive.jpg', 1200.00), 
+    ('Наушники Sony WH-1000XM5', 'sony', 'tel.png', 350.00), 
+    ('Ноутбук Apple MacBook Pro 14', 'apple', 'tel.png', 2000.00),
+    ('Камера GoPro Hero 11 Black', 'gopro', 'tel.png', 500.00), 
+    ('Планшет iPad Air (5th Gen)', 'apple', 'tel.png', 600.00), 
+    ('Умные часы Apple Watch Series 8', 'apple', 'tel.png', 400.00), 
+    ('Телефон Xiaomi Redmi Note 12 Pro', 'xiaomi', 'tel.png', 300.00), 
+    ('Телефон OnePlus 11', 'oneplus', 'tel.png', 700.00), 
+    ('Телефон OpenAI Pixel 7 Pro', 'google', 'tel.png', 900.00), 
+    ('Телефон iPhone 14 Pro Max', 'apple', 'tel.png', 1200.00), 
+    ('Телефон Honor Magic5 Pro', 'honor', 'tel.png', 800.00), 
+    ('Телефон Samsung Galaxy S22', 'samsung', 'tel.png', 700.00), 
+    ('Телефон Realme GT 3', 'realme', 'tel.png', 500.00), 
+    ('Телефон Vivo X90 Pro+', 'vivo', 'tel.png', 850.00), 
+    ('Телефон OPPO Find X6 Pro', 'oppo', 'tel.png', 950.00), 
+    ('Телефон Motorola Edge 40 Pro', 'motorola', 'tel.png', 650.00), 
+    ('Телефон Sony Xperia 1 V', 'sony', 'tel.png', 1000.00), 
+    ('Телефон Huawei P60 Pro', 'huawei', 'tel.png', 750.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+             ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia', 'nokia', 'tel.png', 400.00),
+            ('nokia1', 'nokia', 'tel.png', 400.00),
+            ('nokia2', 'nokia', 'tel.png', 400.00),
+            ('nokia3', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),
+            ('nokia4', 'nokia', 'tel.png', 400.00),
+            ('nokia5', 'nokia', 'tel.png', 400.00),                               
+            ('nokia5', 'nokia', 'admin.jpg', 400.00);
                                             
         """)
         cursor.execute("""
@@ -159,13 +157,14 @@ def create_tables():
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS order_items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            order_id INTEGER NOT NULL,
-            code TEXT NOT NULL,
-            quantity INTEGER NOT NULL,
-            price REAL NOT NULL,
-            FOREIGN KEY (order_id) REFERENCES orders(id)
-        )
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       order_id INTEGER NOT NULL,
+       product_id INTEGER NOT NULL,  -- Добавлено product_id
+       quantity INTEGER NOT NULL,
+       price REAL NOT NULL,
+       FOREIGN KEY (order_id) REFERENCES orders(id),
+       FOREIGN KEY (product_id) REFERENCES product(id)  -- Добавлено FOREIGN KEY
+   );
     """)
 
     db.commit()
@@ -238,8 +237,12 @@ def profile():
         all_products = cursor.fetchall()
 
         db.close()
+        product_images = []
+        for product in all_products:
+            product_image = url_for('static', filename='' + product[2])
+            product_images.append(product_image)
 
-        return render_template('profile.html', user=user, order_details=order_details, all_products=all_products)
+        return render_template('profile.html', user=user, order_details=order_details, all_products=all_products, product_images=product_images)
     else:
         return redirect(url_for('login'))
 
@@ -252,20 +255,19 @@ def checkout():
 
         if request.method == 'POST':
             try:
-                db = get_db()
-                cursor = db.cursor()
+                with get_db() as db:  
+                    cursor = db.cursor()
+                    cursor.execute("INSERT INTO orders (username, total_price) VALUES (?, ?)", (username, total_price))
+                    order_id = cursor.lastrowid
+                    for code, item in cart_items.items():
+                        cursor.execute("SELECT id FROM product WHERE code = ?", (code,))
+                        product_id = cursor.fetchone()[0] 
 
-               
-                cursor.execute("INSERT INTO orders (username, total_price) VALUES (?, ?)", (username, total_price))
-                order_id = cursor.lastrowid
+                        cursor.execute("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)",
+                                       (order_id, product_id, item['quantity'], item['price']))
 
-                
-                for code, item in cart_items.items():
-                    cursor.execute("INSERT INTO order_items (order_id, code, quantity, price) VALUES (?, ?, ?, ?)",
-                                   (order_id, item['code'], item['quantity'], item['price']))
-
-                db.commit() 
-                session.clear()
+                    db.commit()  
+                session.clear()  
 
                 flash('Заказ оформлен успешно!', 'success')
                 return redirect(url_for('profile'))
@@ -276,7 +278,7 @@ def checkout():
                 return redirect(url_for('checkout')) 
             finally:
                 if db:
-                    db.close() 
+                    db.close()  
 
         else:
             return render_template('checkout.html', cart_items=cart_items, total_price=total_price)
@@ -304,16 +306,12 @@ def edit_profile():
 
                 try:
                     if new_profile_picture:
-                       
                         new_profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], f'{username}.jpg'))
-                        
-                       
                         cursor.execute("UPDATE users SET email=?, profile_picture=? WHERE username=?", 
-                                       (new_email, f'/static/profile_pictures/{username}.jpg', username))
+                                       (new_email, f'/profile_pictures/{username}.jpg', username))
                     else:
                         cursor.execute("UPDATE users SET email=? WHERE username=?", (new_email, username))
-
-                    db.commit()
+                        db.commit()
                     db.close()
                     return redirect(url_for('profile'))
                 except sqlite3.IntegrityError:
@@ -354,31 +352,21 @@ def add_product_to_cart():
             row = cursor.fetchone()
 
             if row:
-                
-                image_file = request.files.get('image')
-                if image_file and image_file.filename != '':
-                    image_filename = image_file.filename
-                    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
-                    image_file.save(image_path)
-                else:
-                    image_filename = row[3]
+                image_filename = row[3]  
 
                 itemArray = {
                     _code: {
-                        'name': row[1],
-                        'code': row[2],
-                        'quantity': _quantity,
-                        'price': row[4],
-                        'image': image_filename,
-                        'total_price': _quantity * row[4]
+                    'name': row[1],
+                    'code': row[2],
+                    'quantity': _quantity,
+                    'price': row[4],
+                    'image': row[3],
+                    'total_price': _quantity * row[4]
                     }
                 }
-
-                
                 all_total_price = 0
                 all_total_quantity = 0
 
-                session.modified = True
                 if 'cart_item' in session:
                     if _code in session['cart_item']:
                         session['cart_item'][_code]['quantity'] += _quantity
@@ -410,6 +398,7 @@ def add_product_to_cart():
     finally:
         pass
 
+
 @app.route('/products')
 def products():
     try:
@@ -429,6 +418,9 @@ def cart():
     cart_items = session.get('cart_item', {})  
     total_quantity = session.get('all_total_quantity', 0)
     total_price = session.get('all_total_price', 0.0)
+    for item_code, item_data in cart_items.items():
+        item_data['total_price'] = item_data['quantity'] * item_data['price'] 
+
     return render_template('cart.html', cart_items=cart_items, total_quantity=total_quantity, total_price=total_price)
 
 @app.route('/empty')
@@ -460,10 +452,9 @@ def delete_product(code):
             session['all_total_quantity'] = all_total_quantity
             session['all_total_price'] = all_total_price
 
-        return redirect(url_for('.products'))
+        return redirect(url_for('.cart')) 
     except Exception as e:
         print(e)
-
 
 @app.route('/admin_panel')
 def admin_panel():
@@ -515,7 +506,7 @@ def add_product():
             return 'У вас нет прав доступа к административной панели.'
     else:
         return redirect(url_for('login'))
-
+    
 @app.route('/admin/edit_product/<int:product_id>')
 def edit_product(product_id):
     if 'logged_in' in session and session['logged_in']:

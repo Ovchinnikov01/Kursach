@@ -79,7 +79,12 @@
             {% for product in products %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="{{ product[3] }}" class="card-img-top" alt="{{ product[1] }}">
+                        {% if product[3] %}
+                            <img src="{{ url_for('static',filename='product-images/'+product[3]) }}" class="card-img-top" alt="{{ product[1] }}">
+                        {% else %}
+                            <p class="card-text">Изображение отсутствует</p>
+                        {% endif %}
+    
                         <div class="card-body">
                             <h5 class="card-title">{{ product[1] }}</h5>
                             <p class="card-text">Код: {{ product[2] }}</p>

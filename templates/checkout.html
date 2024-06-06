@@ -2,34 +2,19 @@
 
     {% block body %} 
     
-    <main>
-      <h2>Ваш заказ:</h2>
-      <table class="cart-table">
-          <thead>
-              <tr>
-                  <th>Название</th>
-                  <th>Количество</th>
-                  <th>Цена</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for code, item in cart_items.items() %}
-              <tr>
-                  <td>{{ item['name'] }}</td>
-                  <td>{{ item['quantity'] }}</td>
-                  <td>{{ item['price'] * item['quantity'] }} руб.</td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-
-      <div class="total-price">
-          <h3>Итого: {{ total_price }} руб.</h3>
-      </div>
-
-      <form action="/profile" method="POST">
-          <button type="submit">Оформить заказ</button>
-      </form>
-  </main>
+    <h1>Оформление заказа</h1>
+    {% if cart_items %}
+        <ul>
+            {% for code, item in cart_items.items() %}
+                <li>{{ item['name'] }} - Quantity: {{ item['quantity'] }} - Price: ${{ item['price'] }}</li>
+            {% endfor %}
+        </ul>
+        <p>Total Price: ${{ total_price }}</p>
+        <form method="post">
+            <button type="submit">Оформить заказ</button>
+        </form>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
 
     {% endblock %}

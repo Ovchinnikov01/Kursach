@@ -14,7 +14,7 @@
         <input type="number" id="price" name="price" value="{{ product.price }}" required><br><br>
 
         <label for="image">Изображение:</label><br>
-        <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}" width="100"><br>
+        <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}" width="100"><br>
         <input type="file" id="image" name="image"><br><br>
 
         <input type="submit" value="Сохранить изменения">

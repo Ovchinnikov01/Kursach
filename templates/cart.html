@@ -56,30 +56,51 @@
         <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
             </header>
 
+            <h1>Ваша корзина</h1>
 
-
-
-            <h2>Ваша корзина</h2>
-            <ul>
-              {% for order_item in order_items %}
-                {% for product in products %}
-                  {% if product[1] == order_item[2] %}
-                    <li class="cart-item">
-                      <img src="{{ product[3] }}" alt="{{ product[0] }}" width="50" height="auto">
-                      <div>
-                        <h3>{{ product[0] }}</h3>
-                        <p>Количество: {{ order_item[3] }}</p>
-                        <p>Цена: {{ order_item[4] }}</p>
-                      </div>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-              {% endfor %}
-            </ul>
-                <p>Общее количество: {{ total_quantity }}</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Код</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Итоговая цена</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item_code, item_data in cart_items.items() %}
+                    <tr>
+                      <td>
+                        {% if item_data['image'] %}
+                            <img src="{{ url_for('static', filename='product-images/' + item_data['image']) }}" alt="{{ item_data['name'] }}" height="50">
+                        {% else %}
+                            <p>Изображение отсутствует</p>
+                        {% endif %}
+                    </td>
+                        <td>{{ item_data['name'] }}</td>
+                        <td>{{ item_data['code'] }}</td>
+                        <td>{{ item_data['quantity'] }}</td>
+                        <td>{{ item_data['price'] }}</td>
+                        <td>{{ item_data['total_price'] }}</td>
+                        <td><a href="{{ url_for('delete_product', code=item_code) }}">Удалить</a></td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="total">
+                <p>Итоговое количество: {{ total_quantity }}</p>
                 <p>Итоговая цена: {{ total_price }}</p>
-        
-                <a href="/checkout" class="checkout-button">Оформить заказ</a>
-                <a href="/empty" class="empty-cart-button">Пустая корзина</a>
+            </div>
+            
+            <form method="POST" action="{{ url_for('checkout') }}">
+                <button type="submit">Оформить заказ</button>
+            </form>
+                        
+            <a href="{{ url_for('empty_cart') }}">Очистить корзину</a>
+            <a href="{{ url_for('products') }}">Продолжить покупки</a>
             
     {% endblock %}
