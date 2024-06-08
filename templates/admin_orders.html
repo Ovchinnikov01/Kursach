@@ -1,43 +1,41 @@
 {% extends 'base.html' %}
 
     {% block body %} 
-    <h1>Заказы администратора</h1>
+    <div class="container mt-5">
+        <h1>Админ-панель: Заказы</h1>
 
-    {% if orders %}
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Товар</th>
-                    <th>Количество</th>
+                    <th>Пользователь</th>
                     <th>Статус</th>
-                    <th>Действие</th>
+                    <th>Дата</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
                 {% for order in orders %}
-                <tr>
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.product }}</td>
-                    <td>{{ order.quantity }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>
-                        <form action="/admin/order/{{ order.id }}/accept" method="POST">
-                            <button type="submit">Принять</button>
-                        </form>
-                        <form action="/admin/order/{{ order.id }}/reject" method="POST">
-                            <button type="submit">Отклонить</button>
-                        </form>
-                        <form action="/admin/order/{{ order.id }}/complete" method="POST">
-                            <button type="submit">Завершить</button>
-                        </form>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.user_id }}</td> 
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.date }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('handle_order', order_id=order.id, action='accept') }}">
+                                <button type="submit" class="btn btn-success">Принять</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('handle_order', order_id=order.id, action='reject') }}">
+                                <button type="submit" class="btn btn-danger">Отклонить</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('handle_order', order_id=order.id, action='complete') }}">
+                                <button type="submit" class="btn btn-primary">Завершить</button>
+                            </form>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <p>Заказов нет.</p>
-    {% endif %}
+    </div>
    
     {% endblock %}

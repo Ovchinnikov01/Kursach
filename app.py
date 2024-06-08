@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash, make_response 
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash, make_response 
 from flask_wtf import FlaskForm, CSRFProtect  
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import secrets
 import os
+import g
 
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -148,24 +149,43 @@ def create_tables():
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS orders (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            total_price REAL NOT NULL,
-            FOREIGN KEY (username) REFERENCES users(username)
-        )
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    total_price REAL NOT NULL,
+    status TEXT DEFAULT 'Новый',  
+    date TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES users(username)
+);
     """)
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS order_items (
        id INTEGER PRIMARY KEY AUTOINCREMENT,
        order_id INTEGER NOT NULL,
-       product_id INTEGER NOT NULL,  -- Добавлено product_id
+       product_id INTEGER NOT NULL,
        quantity INTEGER NOT NULL,
        price REAL NOT NULL,
        FOREIGN KEY (order_id) REFERENCES orders(id),
-       FOREIGN KEY (product_id) REFERENCES product(id)  -- Добавлено FOREIGN KEY
+       FOREIGN KEY (product_id) REFERENCES product(id)
    );
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS product_characteristics (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    value TEXT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(id)
+);
+    """)
+
+    cursor.execute("""
+    INSERT INTO product_characteristics (product_id, name, value) 
+    VALUES 
+        (1, 'Цвет', 'аывавы'),
+        (2, 'Размер', 'аываываыв'),  
+        (3, 'Материал', 'процессор'); 
+""")
 
     db.commit()
     db.close()
@@ -201,19 +221,14 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        db = get_db()
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-        user = cursor.fetchone()
-        db.close()
-
-        if user:
+        if username == 'admin' and password == 'adminsite':
             session['logged_in'] = True
             session['username'] = username
-            return redirect(url_for('profile'))
+            return redirect(url_for('admin_panel')) 
         else:
-            return render_template('login.html', error='Неверный логин или пароль')
-    return render_template('login.html')
+            return 'Неверный логин или пароль.'
+    else:
+        return render_template('login.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -410,9 +425,48 @@ def products():
         return render_template('products.html', products=rows)
     except Exception as e:
         print(e)
+        return "Произошла ошибка при загрузке списка продуктов"
     finally:
         pass
 
+@app.route('/product/<product_name>')
+def product_detail(product_name):
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+        product = cursor.fetchone()
+
+        if product:
+            cursor.execute("SELECT * FROM product_characteristics WHERE product_id=?", (product[0],))
+            characteristics = cursor.fetchall()
+
+            db.close()
+            return render_template('product_detail.html', product=product, characteristics=characteristics)
+        else:
+            return 'Товар не найден', 404
+
+    except Exception as e:
+        print(e)
+        return "Произошла ошибка при загрузке информации о товаре" 
+    finally:
+        pass
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
+@app.route('/search')
+def search():
+    query = request.args.get('query')
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT name FROM product WHERE name LIKE ?", ('%' + query + '%',))
+    results = [row[0] for row in cursor.fetchall()]
+    return jsonify(results)
+                        
 @app.route('/cart') 
 def cart():
     cart_items = session.get('cart_item', {})  
@@ -580,7 +634,7 @@ def delet_product(product_id):
     else:
         return redirect(url_for('login'))
 
-@app.route('/admin/orders')
+@app.route('/admin/orders', methods=['GET'])
 def admin_orders():
     if 'logged_in' in session and session['logged_in']:
         if session['username'] == 'admin':
@@ -626,6 +680,5 @@ def handle_order(order_id, action):
             return 'У вас нет прав доступа к административной панели.'
     else:
         return redirect(url_for('login'))
-
 if __name__ == "__main__":
     app.run(debug=True)

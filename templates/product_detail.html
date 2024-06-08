@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block body %} 
+{% block body %}
 <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
     <a href="{{ url_for('index') }}">
-      <h1 class="text-3xl font-black ml-64 mb-2 absolute ">BRAND</h1>
-      <img class="h-9.5 w-9 ml-52 mx-2 " src="/static/img/behoof_logo.png" alt=""></a>
+        <h1 class="text-3xl font-black ml-64 mb-2 absolute ">BRAND</h1>
+        <img class="h-9.5 w-9 ml-52 mx-2 " src="/static/img/behoof_logo.png" alt=""></a>
       <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
       <div class="relative inline-block">
         <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300  hover:bg-red-400 py-2.5 px-10  mr-5 rounded-2xl focus:outline-slate-50" onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
@@ -55,64 +55,27 @@
       <button class="bg-smoky px-3 py-2 mx-1 w-12 h-12"><img src="/static/img/chart.png" alt=""></button>
       <button><a href="{{ url_for('login') }}">Войти</a></button>
     </header>
-    
-        <h1>Профиль</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('products') }}">Товары</a></li>
-                <li><a href="{{ url_for('cart') }}">Корзина</a></li>
-                <li><a href="{{ url_for('profile') }}">Профиль</a></li>
-                <li><a href="{{ url_for('logout') }}">Выход</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container mt-5">
-      <h1>Профиль</h1>
 
-      {% if user %}
-          <div class="row">
-              <div class="col-md-4">
-                  <h2>Информация о пользователе</h2>
-                  <p><strong>Имя пользователя:</strong> {{ user[1] }}</p>
-                  <p><strong>Email:</strong> {{ user[3] }}</p>
-              </div>
-              <div class="col-md-8">
-                  <h2>Заказы</h2>
-                  <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Номер заказа</th>
-                              <th>Дата</th>
-                              <th>Общая стоимость</th>
-                              <th>Товары</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for order, products in order_details %}
-                              <tr>
-                                  <td>{{ order[0] }}</td>
-                                  <td>{{ order[2] }}</td>
-                                  <td>{{ order[1] }}</td>
-                                  <td>
-                                      <ul>
-                                          {% for product in products %}
-                                              <li>{{ product[1] }} ({{ product[10] }} шт.)</li>
-                                          {% endfor %}
-                                      </ul>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      {% else %}
-          <p>Пользователь не найден.</p>
-      {% endif %}
+<main class="container mx-auto mt-8">
+    <div class="flex justify-center">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-md shadow-md p-4">
+                <h2 class="text-xl font-bold mb-4">{{ product[1] }}</h2> 
+                <img src="/static/product-images/{{ product[3] }}" alt="{{ product[1] }}" class="w-full rounded-md mb-4"> 
+                <p class="text-gray-600">Цена: {{ product[4] }} руб.</p>
 
-      
-        <a href="/profile/edit">Редактировать профиль</a>
-        <a href="/logout">Выйти</a>
-        
-
+                <h3 class="text-lg font-bold mt-4">Характеристики:</h3>
+                <ul class="list-disc pl-5">
+                    {% set seen_characteristics = [] %}
+                    {% for characteristic in characteristics %}
+                        {% if characteristic[1] not in seen_characteristics %}
+                            <li class="mb-2">{{ characteristic[1] }}: {{ characteristic[2] }}</li>
+                            {% set seen_characteristics = seen_characteristics.append(characteristic[1]) %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

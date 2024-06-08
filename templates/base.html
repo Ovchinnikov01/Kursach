@@ -10,7 +10,32 @@
 <body>
      {% block body %} {% endblock %}
      {% block last %} {% endblock %}
-    
+     <script>
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+
+      searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.trim();
+
+          if (searchTerm.length > 0) {
+              fetch(`/search?query=${searchTerm}`)
+                  .then(response => response.json())
+                  .then(results => {
+                      searchResults.querySelector('ul').innerHTML = '';
+
+                      results.forEach(result => {
+                          const li = document.createElement('li');
+                          li.innerHTML = `<a href="/product/${encodeURIComponent(result)}" class="block px-4 py-2 hover:bg-gray-200">${result}</a>`;
+                          searchResults.querySelector('ul').appendChild(li);
+                      });
+
+                      searchResults.classList.remove('hidden');
+                  });
+          } else {
+              searchResults.classList.add('hidden');
+          }
+      });
+  </script>
      <style>
         @keyframes fadeIn 
         {from {

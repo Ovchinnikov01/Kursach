@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+    {% block body %} 
+    <div class="dropdown">
+        <input type="text" id="search-input" class="form-control" placeholder="Поиск товаров..." onkeyup="searchProducts()">
+        <div id="search-results" class="dropdown-menu">
+            {% for product in results %}
+            <a href="{{ url_for('product_detail', product_id=product[0]) }}" class="dropdown-item">{{ product[1] }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
