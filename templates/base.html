@@ -11,31 +11,49 @@
      {% block body %} {% endblock %}
      {% block last %} {% endblock %}
      <script>
-      const searchInput = document.getElementById('search-input');
-      const searchResults = document.getElementById('search-results');
-
-      searchInput.addEventListener('input', function() {
-          const searchTerm = this.value.trim();
-
-          if (searchTerm.length > 0) {
-              fetch(`/search?query=${searchTerm}`)
-                  .then(response => response.json())
-                  .then(results => {
-                      searchResults.querySelector('ul').innerHTML = '';
-
-                      results.forEach(result => {
-                          const li = document.createElement('li');
-                          li.innerHTML = `<a href="/product/${encodeURIComponent(result)}" class="block px-4 py-2 hover:bg-gray-200">${result}</a>`;
-                          searchResults.querySelector('ul').appendChild(li);
-                      });
-
-                      searchResults.classList.remove('hidden');
-                  });
-          } else {
-              searchResults.classList.add('hidden');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+      
+        searchInput.addEventListener('input', function(event) {
+          const query = event.target.value;
+          if (query.trim() === '') {
+            searchResults.classList.add('hidden');
+            return;
           }
-      });
-  </script>
+          fetch(`/search?query=${query}`)
+            .then(response => response.json())
+            .then(results => {
+              searchResults.classList.remove('hidden');
+              searchResults.innerHTML = '';
+              results.forEach(result => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="/product/${result.id}">${result.name}</a>`; 
+                searchResults.appendChild(listItem);
+              });
+            });
+        });
+      </script>
+  <script>
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle('hidden');
+        dropdown.classList.toggle('animate-fadeIn');
+        fetch('/dropdown-menu')
+            .then(response => response.json())
+            .then(categories => {
+                const dropdownContent = dropdown.querySelector('.flex-wrap');
+                dropdownContent.innerHTML = ''; 
+
+                categories.forEach(category => {
+                    const categoryLink = document.createElement('a');
+                    categoryLink.href = `/category/${category.id}`; 
+                    categoryLink.textContent = category.name;
+                    categoryLink.classList.add('bg-white', 'hover:bg-gray-100', 'text-gray-800', 'font-semibold', 'py-2', 'px-4', 'rounded-lg', 'cursor-pointer');
+                    dropdownContent.appendChild(categoryLink);
+                });
+            });
+    }
+</script>
      <style>
         @keyframes fadeIn 
         {from {
@@ -56,21 +74,64 @@
           dropdownMenu.classList.toggle('hidden');
         }
         </script>
+
           <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
           <script>
-          const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 5, 
-            spaceBetween: 1, 
-            loop: false, 
-            pagination: {
-            el: '.swiper-pagination', 
-            clickable: true, },
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev', },
-            });
-            </script>
-            
+            fetch('/get_products') 
+              .then(response => response.json())
+              .then(products => {
+                const swiperWrapper = document.querySelector('.swiper-wrapper');
+                products.forEach(product => {
+                  const slide = `
+                    <div class="swiper-slide">
+                      <a href="/product/${product.id}"> <div class="bg-slate-100 w-80 h-52 mx-12 rounded-2xl">
+                        <p class="absolute text-base mt-10 mx-6">${product.name}</p>
+                        <h1 class="absolute text-orange-400 text-2xl font-semibold mx-6 mt-24">${product.price} ₽</h1>
+                        <button class="absolute border border-l-0 border-gray-300 p-3 px-6 rounded-2xl mt-36 mx-5">Подробнее</button>
+                        <img class="w-28 h-28 ml-52 mt-24 absolute" src="/static/product-images/${product.image}" alt="">
+                      </div></a>
+                    </div>
+                  `;
+                  swiperWrapper.innerHTML += slide;
+                });
+                const swiper = new Swiper('.swiper-container', {
+                  slidesPerView: 1,
+                  spaceBetween: 30,
+                  pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                  },
+                  navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  },
+                });
+              });
+          </script>
+          <script>
+            function toggleDropdown(dropdownId) {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.classList.toggle("hidden");
+            }
+    
+            function goToCategory(categoryId) {
+                window.location.href = `/category/${categoryId}`;
+            }
+        </script>   
+        <script>
+          const addCharacteristicButton = document.getElementById('add-characteristic');
+          const characteristicsList = document.getElementById('characteristics-list');
+        
+          addCharacteristicButton.addEventListener('click', () => {
+            const newCharacteristic = `
+              <div class="flex mb-2">
+                <input type="text" name="characteristic_name[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Название характеристики">
+                <input type="text" name="characteristic_value[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" placeholder="Значение характеристики">
+              </div>
+            `;
+            characteristicsList.innerHTML += newCharacteristic;
+          });
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 </body>
 </html>

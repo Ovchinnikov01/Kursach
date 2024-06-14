@@ -1,27 +1,59 @@
 {% extends 'base.html' %}
 
     {% block body %}
-    h1>Добавление товара</h1>
-
-    {% if error %}
-        <div class="error">{{ error }}</div>
-    {% endif %}
-
-    <form method="POST" enctype="multipart/form-data">
-        <label for="name">Название:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-
-        <label for="code">Код:</label><br>
-        <input type="text" id="code" name="code" required><br><br>
-
-        <label for="price">Цена:</label><br>
-        <input type="number" id="price" name="price" required><br><br>
-
-        <label for="image">Изображение:</label><br>
-        <input type="file" id="image" name="image"><br><br>
-
-        <input type="submit" value="Добавить">
-    </form>
-
+    <div class="container mx-auto mt-5">
+      <h1 class="text-2xl font-bold mb-4">Добавление товара</h1>
+    
+      {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong class="font-bold">{{ error }}</strong>
+        </div>
+      {% endif %}
+    
+      <form method="POST" enctype="multipart/form-data" class="bg-white rounded-md shadow-md p-4">
+        <div class="mb-4">
+          <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Название:</label>
+          <input type="text" id="name" name="name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+    
+        <div class="mb-4">
+          <label for="code" class="block text-gray-700 text-sm font-bold mb-2">Код:</label>
+          <input type="text" id="code" name="code" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+    
+        <div class="mb-4">
+          <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Цена:</label>
+          <input type="number" id="price" name="price" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+    
+        <div class="mb-4">
+          <label for="subcategory_id" class="block text-gray-700 text-sm font-bold mb-2">Категория:</label>
+          <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subcategory_id" name="subcategory_id" required>
+            {% for subcategory in subcategories %}
+              <option value="{{ subcategory['id'] }}">{{ subcategory['name'] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+    
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Характеристики:</label>
+          <div id="characteristics-list">
+            <div class="flex mb-2">
+              <input type="text" name="characteristic_name[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Название характеристики">
+              <input type="text" name="characteristic_value[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" placeholder="Значение характеристики">
+            </div>
+          </div>
+          <button type="button" id="add-characteristic" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Добавить характеристику</button>
+        </div>
+    
+        <div class="mb-4">
+          <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Изображение:</label>
+          <input type="file" id="image" name="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+    
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Добавить</button>
+      </form>
+    </div>
+    
    
     {% endblock %}

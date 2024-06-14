@@ -2,117 +2,169 @@
 
 {% block body %} 
 <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
-    <a href="{{ url_for('index') }}">
-      <h1 class="text-3xl font-black ml-64 mb-2 absolute ">BRAND</h1>
-      <img class="h-9.5 w-9 ml-52 mx-2 " src="/static/img/behoof_logo.png" alt=""></a>
-      <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
-      <div class="relative inline-block">
-        <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300  hover:bg-red-400 py-2.5 px-10  mr-5 rounded-2xl focus:outline-slate-50" onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
-        <div class="hidden origin-top-left absolute left-0 mt-2 px-96 py-96 rounded-md shadow-lg bg-slate-50 ring-1 ring-black ring-opacity-5 animate-fadeIn z-50" id="dropdownMenuRight">
-          <div class="flex flex-wrap gap-64 justify-center -mt-40">
-            <div>
-              <h1 class="py-2 text-base text-gray-400">Пользователю</h1>
-              <div>
-              <p class="py-4 text-anthracite">Связаться с нами</p>
-              <p class="py-4 text-anthracite">Поддерка пользователей</p>
-              <p class="py-4 text-anthracite">FAQ & Руководства</p>
-              <p class="py-4 text-anthracite">Политика конфиденциальности</p>
-              <p class="py-4 text-anthracite">Пользовательское соглашение</p>
-              </div>
-            </div>
-            <div>
-              <h1 class="py-2 text-base text-gray-400">Популярные категории</h1>
-              <div>
-                <p class="py-4 text-anthracite">Смартфоны</p>
-                <p class="py-4 text-anthracite">Teteras electricas</p>
-                <p class="py-4 text-anthracite">Стиральные машины</p>
-                <p class="py-4 text-anthracite">Телевизоры</p>
-                <p class="py-4 text-anthracite">Ноутбуки</p>
-              </div>
-            </div>
-            <div>
-              <h1 class="py-2 text-base text-gray-400">Команда BRAND</h1>
-              <div>
-                <p class="py-4 text-anthracite">О нас</p>
-                <p class="py-4 text-anthracite">Работа у нас</p>
-              </div>
-            </div>
-           </div>
-        </div>
-      </div>
-      <div class="w-500px  relative"> 
-        <div class="relative z-10"> <input type="text" id="search-input" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Введите название товара">
-          <div class="absolute right-3 top-1/2 -translate-y-1/2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-          </div>
-        </div>
-        <div id="search-results" class="mt-4 absolute z-10 rounded-md border border-gray-300 bg-white shadow-sm hidden">
-          <ul class="py-2"></ul>
-        </div>
-      </div>
-      <button class="bg-smoky px-3 py-2 mx-2 w-12 h-12"><img src="/static/img/heart.png" alt=""></button>
-      <a href="{{ url_for('profile') }}" class="bg-smoky px-3 py-3 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></a>
-      <button class="bg-smoky px-3 py-2 mx-1 w-12 h-12"><img src="/static/img/chart.png" alt=""></button>
-      <button><a href="{{ url_for('login') }}">Войти</a></button>
-    </header>
+  <a href="{{ url_for('index') }}">
+    <h1 class="text-3xl font-black ml-72 mb-5 absolute ">BRAND</h1>
+    <img class="h-9.5 w-9 ml-60 mx-40" src="/static/img/behoof_logo.png" alt=""></a>
+    <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
+    <div class="relative inline-block">
+      <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50" onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
+      <div class="hidden origin-top-left absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 animate-fadeIn z-50" id="dropdownMenuRight">
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-4">Категории товаров</h2>
+          <ul class="space-y-2">
+            {% for category in categories %}
+              <li>
+                <a href="{{ url_for('category_detail', category_id=category['id']) }}" class="block px-3 py-2 rounded-md hover:bg-gray-100">{{ category['name'] }}</a>
+              </li>
+            {% endfor %}
+          </ul>
     
-        <h1>Профиль</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('products') }}">Товары</a></li>
-                <li><a href="{{ url_for('cart') }}">Корзина</a></li>
-                <li><a href="{{ url_for('profile') }}">Профиль</a></li>
-                <li><a href="{{ url_for('logout') }}">Выход</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container mt-5">
-      <h1>Профиль</h1>
+          <h2 class="text-xl font-semibold mt-6 mb-4">Подкатегории</h2>
+          <ul class="space-y-2">
+            {% for subcategory in subcategories %}
+              <li>
+                <a href="{{ url_for('subcategory_detail', subcategory_id=subcategory['id']) }}" class="block px-3 py-2 rounded-md hover:bg-gray-100">{{ subcategory['name'] }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="w-500px relative"> 
+      <div class="relative z-10"> 
+        <input type="text" id="search-input" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Введите название товара" onkeyup="searchProducts()">
+        <div class="absolute right-3 top-1/2 -translate-y-1/2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </div>
+      </div>
+      <div id="search-results" class="mt-4 absolute z-10 rounded-md border border-gray-300 bg-white shadow-sm hidden">
+        <ul class="py-2"></ul>
+      </div>
+    </div>
+    <a href="/admin_panel" class="bg-smoky px-3 py-2 mx-2 w-12 h-12"><svg fill="#000000" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M276.941 440.584v565.722c0 422.4 374.174 625.468 674.71 788.668l8.02 4.292 8.131-4.292c300.537-163.2 674.71-366.268 674.71-788.668V440.584l-682.84-321.657L276.94 440.584Zm682.73 1479.529c-9.262 0-18.523-2.372-26.993-6.89l-34.9-18.974C588.095 1726.08 164 1495.906 164 1006.306V404.78c0-21.91 12.65-41.788 32.414-51.162L935.727 5.42c15.134-7.228 32.866-7.228 48 0l739.313 348.2c19.765 9.374 32.414 29.252 32.414 51.162v601.525c0 489.6-424.207 719.774-733.779 887.943l-34.899 18.975c-8.47 4.517-17.731 6.889-27.105 6.889Zm467.158-547.652h-313.412l-91.595-91.482v-83.803H905.041v-116.78h-83.69l-58.503-58.504c-1.92.113-3.84.113-5.76.113-176.075 0-319.285-143.21-319.285-319.285 0-176.075 143.21-319.398 319.285-319.398 176.075 0 319.285 143.323 319.285 319.398 0 1.92 0 3.84-.113 5.647l350.57 350.682v313.412Zm-266.654-112.941h153.713v-153.713L958.462 750.155l3.953-37.27c1.017-123.897-91.595-216.621-205.327-216.621S550.744 588.988 550.744 702.72c0 113.845 92.612 206.344 206.344 206.344l47.21-5.309 63.811 63.7h149.873v116.78h116.781v149.986l25.412 25.299Zm-313.4-553.57c0 46.758-37.949 84.706-84.706 84.706-46.758 0-84.706-37.948-84.706-84.706s37.948-84.706 84.706-84.706c46.757 0 84.706 37.948 84.706 84.706" fill-rule="evenodd"></path> </g></svg></a>
+          <a href="{{ url_for('profile') }}" class="bg-smoky px-3 py-3 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></a>
+          <a href="{{ url_for('cart') }}" class="bg-smoky px-3 py-2 mx-1 w-12 h-12"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></a>
+    <div class="flex gap-2 pl-10">
+      <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">
+        <a href="{{ url_for('login') }}" class="text-white">Войти</a>
+      </button>
+      <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">
+        <a href="{{ url_for('register') }}" class="text-white">Регистрация</a>
+      </button>
+    </div>
+  </header>
+  <main class="container mx-auto mt-8 px-4">
+    <h1 class="text-3xl font-bold mb-4 text-center">Профиль</h1>
 
-      {% if user %}
-          <div class="row">
-              <div class="col-md-4">
-                  <h2>Информация о пользователе</h2>
-                  <p><strong>Имя пользователя:</strong> {{ user[1] }}</p>
-                  <p><strong>Email:</strong> {{ user[3] }}</p>
-              </div>
-              <div class="col-md-8">
-                  <h2>Заказы</h2>
-                  <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Номер заказа</th>
-                              <th>Дата</th>
-                              <th>Общая стоимость</th>
-                              <th>Товары</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for order, products in order_details %}
-                              <tr>
-                                  <td>{{ order[0] }}</td>
-                                  <td>{{ order[2] }}</td>
-                                  <td>{{ order[1] }}</td>
-                                  <td>
-                                      <ul>
-                                          {% for product in products %}
-                                              <li>{{ product[1] }} ({{ product[10] }} шт.)</li>
-                                          {% endfor %}
-                                      </ul>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      {% else %}
-          <p>Пользователь не найден.</p>
-      {% endif %}
 
-      
-        <a href="/profile/edit">Редактировать профиль</a>
-        <a href="/logout">Выйти</a>
-        
+    {% if user %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-md shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4">Информация о пользователе</h2>
+            <div class="flex items-center mb-4">
+                {% if user[4] %}
+                <img src="{{ url_for('static', filename='user-images/' + user[4]) }}" alt="{{ user[1] }}" class="w-24 h-24 rounded-full mr-4">
+                {% else %}
+                <svg class="w-24 h-24 rounded-full mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c0 1.104-.896 2-2 2s-2-.896-2-2c0-1.104.896-2 2-2s2 .896 2 2z"></path>
+                </svg>
+                {% endif %}
+                <div>
+                    <p class="font-medium text-gray-700">Имя пользователя:</p>
+                    <p class="text-gray-600">{{ user[1] }}</p>
+                </div>
+            </div>
+            <p class="font-medium text-gray-700">Email:</p>
+            <p class="text-gray-600">{{ user[3] }}</p>
+        </div>
 
+        <div class="bg-white rounded-md shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4">Заказы</h2>
+            <table class="table-auto w-full">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="px-4 py-3 text-left font-medium">Номер заказа</th>
+                        <th class="px-4 py-3 text-left font-medium">Дата и время</th>
+                        <th class="px-4 py-3 text-left font-medium">Общая стоимость</th>
+                        <th class="px-4 py-3 text-left font-medium">Товары</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order, products in order_details %}
+                    <tr>
+                        <td class="px-4 py-3 border-b border-gray-200 text-sm">{{ order[0] }}</td>
+                        <td class="px-4 py-3 border-b border-gray-200 text-sm">{{ order["дата и время"] }}</td>
+                        <td class="px-4 py-3 border-b border-gray-200 text-sm">{{ order[2] }}</td>
+                        <td class="px-4 py-3 border-b border-gray-200 text-sm">
+                            <ul>
+                                {% for product in products %}
+                                <li>
+                                    <a href="{{ url_for('product_detail', product_id=product[0]) }}">
+                                        <img src="{{ url_for('static', filename='product-images/' + product[3]) }}" alt="{{ product[1] }}" width="50">
+                                        {{ product[1] }} ({{ product["quantity"] }} шт.) - {{ product["price"] }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-center">Пользователь не найден.</p>
+    {% endif %}
+
+    <div class="mt-4 flex justify-center">
+        {% if user %}
+        <a href="/profile/edit" class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">Редактировать профиль</a>
+        {% endif %}
+        <a href="/logout" class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">Выйти</a>
+    </div>
+</main>
+<div class="bg-slate-50 w-full h-96 mt-20">
+  <div class="">
+    <img class="h-9.5 w-9 ml-44 mt-10 absolute" src="/static/img/behoof_logo.png" alt="">
+    <h1 class="text-3xl font-black px-56 pt-10">BRAND</h1>
+    <p class="text-base text-gray-400 pl-44 pt-6">Мы в соц сетях</p>
+    <div class="flex flex-wrap pt-7 ml-44 gap-3">
+      <img src="/static/img/VK.png" alt="">
+      <img src="/static/img/TT.png" alt="">
+      <img src="/static/img/Inst.png" alt="">
+      <img src="/static/img/TG.png" alt="">
+      <img src="/static/img/YT.png" alt="">
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-64 justify-center -mt-40">
+    <div>
+      <h1 class="py-2 text-base text-gray-400">Пользователю</h1>
+      <div>
+      <p class="py-4 text-anthracite">Связаться с нами</p>
+      <p class="py-4 text-anthracite">Поддерка пользователей</p>
+      <p class="py-4 text-anthracite">FAQ & Руководства</p>
+      <p class="py-4 text-anthracite">Политика конфиденциальности</p>
+      <p class="py-4 text-anthracite">Пользовательское соглашение</p>
+      </div>
+    </div>
+    <div>
+      <h1 class="py-2 text-base text-gray-400">Популярные категории</h1>
+      <div>
+        <p class="py-4 text-anthracite">Смартфоны</p>
+        <p class="py-4 text-anthracite">Teteras electricas</p>
+        <p class="py-4 text-anthracite">Стиральные машины</p>
+        <p class="py-4 text-anthracite">Телевизоры</p>
+        <p class="py-4 text-anthracite">Ноутбуки</p>
+      </div>
+    </div>
+    <div>
+      <h1 class="py-2 text-base text-gray-400">Команда BRAND</h1>
+      <div>
+        <p class="py-4 text-anthracite">О нас</p>
+        <p class="py-4 text-anthracite">Работа у нас</p>
+      </div>
+    </div>
+   </div>
+</div>
 {% endblock %}

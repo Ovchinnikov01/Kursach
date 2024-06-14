@@ -2,91 +2,94 @@
 
     {% block body %}
     <header class="flex items-center  p-6 bg-white-2   border border-l-0 border-gray-300 rounded-tr-sm rounded-br-sm ">
-        <a href="{{ url_for('index') }}">
-            <h1 class="text-3xl font-black ml-64 mb-2 absolute ">BRAND</h1>
-            <img class="h-9.5 w-9 ml-52 mx-2 " src="/static/img/behoof_logo.png" alt=""></a>
-          <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
-          <div class="relative inline-block">
-            <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300  hover:bg-red-400 py-2.5 px-10  mr-5 rounded-2xl focus:outline-slate-50" onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
-            <div class="hidden origin-top-left absolute left-0 mt-2 px-96 py-96 rounded-md shadow-lg bg-slate-50 ring-1 ring-black ring-opacity-5 animate-fadeIn z-50" id="dropdownMenuRight">
-              <div class="flex flex-wrap gap-64 justify-center -mt-40">
-                <div>
-                  <h1 class="py-2 text-base text-gray-400">Пользователю</h1>
-                  <div>
-                  <p class="py-4 text-anthracite">Связаться с нами</p>
-                  <p class="py-4 text-anthracite">Поддерка пользователей</p>
-                  <p class="py-4 text-anthracite">FAQ & Руководства</p>
-                  <p class="py-4 text-anthracite">Политика конфиденциальности</p>
-                  <p class="py-4 text-anthracite">Пользовательское соглашение</p>
-                  </div>
-                </div>
-                <div>
-                  <h1 class="py-2 text-base text-gray-400">Популярные категории</h1>
-                  <div>
-                    <p class="py-4 text-anthracite">Смартфоны</p>
-                    <p class="py-4 text-anthracite">Teteras electricas</p>
-                    <p class="py-4 text-anthracite">Стиральные машины</p>
-                    <p class="py-4 text-anthracite">Телевизоры</p>
-                    <p class="py-4 text-anthracite">Ноутбуки</p>
-                  </div>
-                </div>
-                <div>
-                  <h1 class="py-2 text-base text-gray-400">Команда BRAND</h1>
-                  <div>
-                    <p class="py-4 text-anthracite">О нас</p>
-                    <p class="py-4 text-anthracite">Работа у нас</p>
-                  </div>
-                </div>
-               </div>
+      <a href="{{ url_for('index') }}">
+        <h1 class="text-3xl font-black ml-72 mb-5 absolute ">BRAND</h1>
+        <img class="h-9.5 w-9 ml-60 mx-40" src="/static/img/behoof_logo.png" alt=""></a>
+        <p class="text-sm text-rgba(38, 49, 65, 1) pr-5 ">Лучшие цены в <br>интернет-магазинах </p>
+        <div class="relative inline-block">
+          <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50" onclick="toggleDropdown('dropdownMenuRight')">Каталог</button>
+          <div class="hidden origin-top-left absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 animate-fadeIn z-50" id="dropdownMenuRight">
+            <div class="p-4">
+              <h2 class="text-xl font-semibold mb-4">Категории товаров</h2>
+              <ul class="space-y-2">
+                {% for category in categories %}
+                  <li>
+                    <a href="{{ url_for('category_detail', category_id=category['id']) }}" class="block px-3 py-2 rounded-md hover:bg-gray-100">{{ category['name'] }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+        
+              <h2 class="text-xl font-semibold mt-6 mb-4">Подкатегории</h2>
+              <ul class="space-y-2">
+                {% for subcategory in subcategories %}
+                  <li>
+                    <a href="{{ url_for('subcategory_detail', subcategory_id=subcategory['id']) }}" class="block px-3 py-2 rounded-md hover:bg-gray-100">{{ subcategory['name'] }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
-          <div class="w-500px  relative"> 
-            <div class="relative z-10"> <input type="text" id="search-input" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Введите название товара">
-              <div class="absolute right-3 top-1/2 -translate-y-1/2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-              </div>
-            </div>
-            <div id="search-results" class="mt-4 absolute z-10 rounded-md border border-gray-300 bg-white shadow-sm hidden">
-              <ul class="py-2"></ul>
+        </div>
+        <div class="w-500px  relative"> 
+          <div class="relative z-10"> 
+            <input type="text" id="search-input" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Введите название товара">
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             </div>
           </div>
-          <button class="bg-smoky px-3 py-2 mx-2 w-12 h-12"><img src="/static/img/heart.png" alt=""></button>
+          <div id="search-results" class="absolute bg-white rounded-md shadow-md mt-1 z-10 hidden">
+          </div>
+        </div>
+          <div id="search-results" class="mt-4 absolute z-10 rounded-md border border-gray-300 bg-white shadow-sm hidden">
+            <ul class="py-2"></ul>
+          </div>
+        </div>
+        <a href="/admin_panel" class="bg-smoky px-3 py-2 mx-2 w-12 h-12"><svg fill="#000000" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M276.941 440.584v565.722c0 422.4 374.174 625.468 674.71 788.668l8.02 4.292 8.131-4.292c300.537-163.2 674.71-366.268 674.71-788.668V440.584l-682.84-321.657L276.94 440.584Zm682.73 1479.529c-9.262 0-18.523-2.372-26.993-6.89l-34.9-18.974C588.095 1726.08 164 1495.906 164 1006.306V404.78c0-21.91 12.65-41.788 32.414-51.162L935.727 5.42c15.134-7.228 32.866-7.228 48 0l739.313 348.2c19.765 9.374 32.414 29.252 32.414 51.162v601.525c0 489.6-424.207 719.774-733.779 887.943l-34.899 18.975c-8.47 4.517-17.731 6.889-27.105 6.889Zm467.158-547.652h-313.412l-91.595-91.482v-83.803H905.041v-116.78h-83.69l-58.503-58.504c-1.92.113-3.84.113-5.76.113-176.075 0-319.285-143.21-319.285-319.285 0-176.075 143.21-319.398 319.285-319.398 176.075 0 319.285 143.323 319.285 319.398 0 1.92 0 3.84-.113 5.647l350.57 350.682v313.412Zm-266.654-112.941h153.713v-153.713L958.462 750.155l3.953-37.27c1.017-123.897-91.595-216.621-205.327-216.621S550.744 588.988 550.744 702.72c0 113.845 92.612 206.344 206.344 206.344l47.21-5.309 63.811 63.7h149.873v116.78h116.781v149.986l25.412 25.299Zm-313.4-553.57c0 46.758-37.949 84.706-84.706 84.706-46.758 0-84.706-37.948-84.706-84.706s37.948-84.706 84.706-84.706c46.757 0 84.706 37.948 84.706 84.706" fill-rule="evenodd"></path> </g></svg></a>
           <a href="{{ url_for('profile') }}" class="bg-smoky px-3 py-3 mx-2 w-12 h-12"><img src="/static/img/frame.png" alt=""></a>
-          <button class="bg-smoky px-3 py-2 mx-1 w-12 h-12"><img src="/static/img/chart.png" alt=""></button>
-          <button><a href="{{ url_for('login') }}">Войти</a></button>
-        </header>
-    <h1>Административная панель</h1>
-
-    <ul>
-        <li><a href="{{ url_for('add_product') }}">Добавить товар</a></li>
-        <li><a href="{{ url_for('admin_orders') }}">Управление заказами</a></li>
-    </ul>
-
-    <h2>Список товаров</h2>
-    <table>
-        <thead>
+          <a href="{{ url_for('cart') }}" class="bg-smoky px-3 py-2 mx-1 w-12 h-12"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></a>
+        <div class="flex gap-2 pl-10">
+          <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">
+            <a href="{{ url_for('login') }}" class="text-white">Войти</a>
+          </button>
+          <button class="text-white flex items-center bg-red-600 border border-2-0 border-gray-300 hover:bg-red-400 py-2.5 px-10 mr-5 rounded-2xl focus:outline-slate-50">
+            <a href="{{ url_for('register') }}" class="text-white">Регистрация</a>
+          </button>
+        </div>
+      </header>
+      <div class="container mx-auto mt-5">
+        <h1 class="text-2xl font-bold mb-4">Административная панель</h1>
+      
+        <ul class="list-disc pl-5">
+          <li><a href="{{ url_for('add_product') }}" class="text-blue-500 hover:underline">Добавить товар</a></li>
+          <li><a href="{{ url_for('admin_orders') }}" class="text-blue-500 hover:underline">Управление заказами</a></li>
+        </ul>
+      
+        <h2 class="text-xl font-bold mt-4">Список товаров</h2>
+        <table class="table-auto border-collapse border border-gray-300 w-full">
+          <thead>
             <tr>
-                <th>Название</th>
-                <th>Код</th>
-                <th>Изображение</th>
-                <th>Цена</th>
-                <th>Действия</th>
+              <th class="px-4 py-2 border border-gray-300">Название</th>
+              <th class="px-4 py-2 border border-gray-300">Код</th>
+              <th class="px-4 py-2 border border-gray-300">Изображение</th>
+              <th class="px-4 py-2 border border-gray-300">Цена</th>
+              <th class="px-4 py-2 border border-gray-300">Действия</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             {% for product in products %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.code }}</td>
-                    <td><img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}" width="50"></td>
-                    <td>{{ product.price }}</td>
-                    <td>
-                        <a href="{{ url_for('edit_product', product_id=product.id) }}">Редактировать</a> |
-                        <a href="{{ url_for('delet_product', product_id=product.id) }}" onclick="return confirm('Вы уверены, что хотите удалить товар?');">Удалить</a>
-                    </td>
-                </tr>
+            <tr>
+              <td class="px-4 py-2 border border-gray-300">{{ product.name }}</td>
+              <td class="px-4 py-2 border border-gray-300">{{ product.code }}</td>
+              <td class="px-4 py-2 border border-gray-300"><img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}" width="50"></td>
+              <td class="px-4 py-2 border border-gray-300">{{ product.price }}</td>
+              <td class="px-4 py-2 border border-gray-300">
+                <a href="{{ url_for('edit_product', product_id=product.id) }}" class="text-blue-500 hover:underline">Редактировать</a> |
+                <a href="{{ url_for('delet_product', product_id=product.id) }}" onclick="return confirm('Вы уверены, что хотите удалить товар?');" class="text-red-500 hover:underline">Удалить</a>
+              </td>
+            </tr>
             {% endfor %}
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
     
     {% endblock %}
