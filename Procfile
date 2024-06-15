@@ -1,1 +1,1 @@
-web: gunicorn kursach:app
+web: gunicorn app:app
