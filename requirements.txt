@@ -26,7 +26,6 @@ Flask-BabelEx==0.9.4
 Flask-Bcrypt==1.0.1
 Flask-CKEditor==0.5.1
 Flask-Cors==4.0.1
-Flask-Exts==0.1.4
 Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Migrate==4.0.7
