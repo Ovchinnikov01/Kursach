@@ -87,4 +87,3 @@ Werkzeug==3.0.3
 wsproto==1.2.0
 WTForms==3.1.2
 xxhash==3.4.1
-tailwindcss==3.4.3
